@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d')
 
 const CANVAS_WIDTH = canvas.width = 600
 const CANVAS_HEIGHT = canvas.height = 600
-const PLAYER_IMAGE = './static/images/shadow_dog.png'
+const PLAYER_IMAGE = '../../static/images/shadow_dog.png'
 
 let mode = 'idle'
 
