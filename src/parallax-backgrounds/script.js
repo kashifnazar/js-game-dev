@@ -4,9 +4,20 @@ const ctx = canvas.getContext('2d')
 const CANVAS_WIDTH = canvas.width = 800
 const CANVAS_HEIGHT = canvas.height = 700
 
-const BACKGROUND_WIDTH = 2400
+let gameSpeed = 5
 
-const GAME_SPEED = 5
+const slider = document.getElementById('slider')
+const speed = document.getElementById('speed')
+
+speed.innerHTML = gameSpeed
+
+slider.addEventListener('change', e => {
+
+    console.log(e);
+
+    gameSpeed = e.target.value
+    speed.innerHTML = gameSpeed
+})
 
 class Layer {
 
@@ -23,12 +34,12 @@ class Layer {
 
     draw() {
         ctx.drawImage(this.image, this.x, 0, this.width, this.height)
-        ctx.drawImage(this.image, this.x + BACKGROUND_WIDTH, 0, this.width, this.height)
+        ctx.drawImage(this.image, this.x + this.width, 0, this.width, this.height)
     }
 
     update() {
-        const layerSpeed = GAME_SPEED * this.speed
-        this.x = this.x % BACKGROUND_WIDTH - layerSpeed
+        const layerSpeed = gameSpeed * this.speed
+        this.x = this.x % this.width - layerSpeed
     }
 }
 
