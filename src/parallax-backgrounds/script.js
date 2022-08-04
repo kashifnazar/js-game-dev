@@ -4,23 +4,38 @@ const ctx = canvas.getContext('2d')
 const CANVAS_WIDTH = canvas.width = 800
 const CANVAS_HEIGHT = canvas.height = 600
 
-const GAME_SPEED = 5
+const BACKGROUND_WIDTH = 2400
 
-const backgroundLayers = [1,1,1,1,1].map((_1, index) => {
-    const layer = new Image()
-    layer.src = `../../static/images/layer-${index+1}.png`
-    return layer
-})
+const GAME_SPEED = 10
 
-let x = 0
+class Layer {
+
+    constructor(image, speed) {
+        this.x = 0
+
+        this.image = new Image()
+        this.image.src = image
+    }
+
+    draw() {
+        ctx.drawImage(this.image, this.x, 0)
+        ctx.drawImage(this.image, this.x + BACKGROUND_WIDTH, 0)
+    }
+
+    update() {
+        this.x = this.x % BACKGROUND_WIDTH - GAME_SPEED
+        console.log(this.x);
+    }
+}
+
+const layer = new Layer(`../../static/images/layer-4.png`)
+
 
 function animate() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 
-    ctx.drawImage(backgroundLayers[3], x, 0)
-    ctx.drawImage(backgroundLayers[3], x, 0)
-
-    x -= GAME_SPEED
+    layer.draw()
+    layer.update()
 
     requestAnimationFrame(animate)
 }
