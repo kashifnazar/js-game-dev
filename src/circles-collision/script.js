@@ -16,9 +16,10 @@ canvas.addEventListener('mousemove', e => {
 
 class Circle {
     
-    constructor(x, y, radius, fixed = true) {
+    constructor(x, y, radius, color, fixed = true) {
         this.x = x
         this.y = y
+        this.color = color
         this.radius = radius
         this.fixed = fixed
     }
@@ -32,13 +33,15 @@ class Circle {
     }
     
     draw() {
+        ctx.fillStyle = this.color
         ctx.beginPath()
         ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
-        ctx.stroke()
+        ctx.fill()
+        ctx.fillStyle = null
     }
 }
 
-const circles = [new Circle(100, 100, 50), new Circle(500, 500, 50, false)]
+const circles = [new Circle(100, 100, 50, 'red'), new Circle(500, 500, 50, 'green', false)]
 
 
 function animate() {
