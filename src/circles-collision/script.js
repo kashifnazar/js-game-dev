@@ -20,6 +20,7 @@ class Circle {
         this.x = x
         this.y = y
         this.color = color
+        this.originalColor = color
         this.radius = radius
         this.fixed = fixed
     }
@@ -47,9 +48,20 @@ const circles = [new Circle(100, 100, 50, 'red'), new Circle(500, 500, 50, 'gree
 function animate() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 
-    circles.forEach(c => {
-        c.udpate().draw()
-    })
+    circles.forEach(c => c.udpate().draw())
+
+    let dx = circles[0].x - circles[1].x
+    let dy = circles[0].y - circles[1].y
+
+    let distance = Math.sqrt(dx * dx + dy * dy)
+    let radiusSum = circles[0].radius + circles[1].radius
+
+    if(distance < radiusSum) {
+        circles.forEach(c => c.color = 'yellow')
+    } else {
+        circles.forEach(c => c.color = c.originalColor)
+    }
+
 
     requestAnimationFrame(animate)
 }
