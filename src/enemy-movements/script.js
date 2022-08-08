@@ -6,9 +6,17 @@ const ctx = canvas.getContext('2d')
 const CANVAS_WIDTH = canvas.width = 600
 const CANVAS_HEIGHT = canvas.height = 800
 
-
 const SPRITE_WIDTH = 213
 const SPRITE_HEIGHT = 213
+
+let mouseX, mouseY
+
+canvas.addEventListener('mousemove', e => {
+    console.log(e.offsetX, e.offsetY)
+    mouseX = e.clientX
+    mouseY = e.clientY
+})
+
 
 let frame = 0
 
@@ -40,27 +48,28 @@ class Enemy {
 
     update() {
 
-        if(gameFrame % 60 === 0) {
-            this.newX = Math.random() * (canvas.width - this.width)
-            this.newY = Math.random() * (canvas.height - this.height)
-        }
+        // if(gameFrame % 60 === 0) {
+        //     this.newX = Math.random() * (canvas.width - this.width)
+        //     this.newY = Math.random() * (canvas.height - this.height)
+        // }
 
-        this.dx = this.x - this.newX
-        this.dy = this.y - this.newY
+        // this.dx = this.x - this.mouseX
+        // this.dy = this.y - this.mouseY
 
-        this.x -= this.dx/20
-        this.y -= this.dy/20
+        this.x = mouseX
+        this.y = mouseY
+
 
         if(++this.flapFrame % 6 === 0) this.flap++
 
-        if(this.x + this.width < 0) this.x = canvas.width
+        // if(this.x + this.width < 0) this.x = canvas.width
 
         this.flap %= 6    
     }
 }
 
 
-const enemies = [...Array(100)].map(e => new Enemy())
+const enemies = [...Array(1)].map(e => new Enemy())
 
 function animate() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
