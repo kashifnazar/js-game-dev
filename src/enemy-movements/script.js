@@ -17,14 +17,20 @@ class Enemy {
         this.x = (Math.random() * CANVAS_WIDTH)
         this.y = Math.random() * CANVAS_HEIGHT
 
-        this.xSpeed = Math.random() * 10 - 8
-        this.ySpeed = Math.random() * 10 - 8
+        this.xSpeed = -Math.random() * 10
+        // this.ySpeed = Math.random() * 10 - 8
 
         this.image = new Image()
         this.image.src = '../../static/images/enemy2.png'
 
         this.flap = 0
         this.flapFrame = 0
+
+        this.angle = 0
+        this.angleSpeed = Math.random() * .2
+
+        this.curve = 5
+
     }
 
     draw() {
@@ -33,12 +39,14 @@ class Enemy {
 
     update() {
         this.x += this.xSpeed
-        this.y += this.ySpeed
+        this.y += this.curve * Math.sin(this.angle)
 
         
         if(++this.flapFrame % 6 === 0) this.flap++
 
-        this.flap%=6
+        this.flap %= 6
+
+        this.angle += this.angleSpeed
         
     }
 }
