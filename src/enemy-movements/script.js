@@ -7,10 +7,12 @@ const CANVAS_WIDTH = canvas.width = 600
 const CANVAS_HEIGHT = canvas.height = 800
 
 
-const SPRITE_WIDTH = 218
-const SPRITE_HEIGHT = 188
+const SPRITE_WIDTH = 213
+const SPRITE_HEIGHT = 213
 
 let frame = 0
+
+let gameFrame = 0
 
 class Enemy {
     constructor() {
@@ -21,35 +23,39 @@ class Enemy {
         this.x = Math.random() * (canvas.width - this.width)
         this.y = Math.random() * (canvas.height - this.height)
 
+        this.newX = Math.random() * (canvas.width - this.width)
+        this.newY = Math.random() * (canvas.height - this.height)
+
         this.image = new Image()
-        this.image.src = '../../static/images/enemy3.png'
+        this.image.src = '../../static/images/enemy4.png'
 
         this.flap = 0
         this.flapFrame = 0
-
-        this.angle = 0
-        this.angleSpeed = Math.random() * 1.5 + 0.5
-        this.curve = Math.random() * 200
-
     }
 
     draw() {
         ctx.drawImage(this.image, this.flap * SPRITE_WIDTH, 0, SPRITE_WIDTH, SPRITE_HEIGHT, this.x, this.y, 100, 100 )
+        return this    
     }
 
     update() {
 
-        this.x = this.curve * Math.sin(this.angle * Math.PI/90) + (canvas.width/2 + this.width/2)
-        this.y = this.curve * Math.cos(this.angle * Math.PI/180) + (canvas.height/2 + this.height/2)
-        
+        if(gameFrame % 60 === 0) {
+            this.newX = Math.random() * (canvas.width - this.width)
+            this.newY = Math.random() * (canvas.height - this.height)
+        }
 
-        this.angle += this.angleSpeed
+        this.dx = this.x - this.newX
+        this.dy = this.y - this.newY
+
+        this.x -= this.dx/20
+        this.y -= this.dy/20
 
         if(++this.flapFrame % 6 === 0) this.flap++
 
-        this.flap %= 6
+        if(this.x + this.width < 0) this.x = canvas.width
 
-        
+        this.flap %= 6    
     }
 }
 
@@ -59,11 +65,11 @@ const enemies = [...Array(100)].map(e => new Enemy())
 function animate() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 
-    enemies.forEach(enemy =>
-        {   enemy.draw()
-            enemy.update()
-        }
-    )
+    enemies.forEach(enemy => {   
+            enemy.draw().update()
+    })
+
+    gameFrame++
 
     requestAnimationFrame(animate)
 }
