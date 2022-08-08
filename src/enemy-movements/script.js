@@ -7,8 +7,8 @@ const CANVAS_WIDTH = canvas.width = 600
 const CANVAS_HEIGHT = canvas.height = 800
 
 
-const SPRITE_WIDTH = 293
-const SPRITE_HEIGHT = 155
+const SPRITE_WIDTH = 266
+const SPRITE_HEIGHT = 188
 
 let frame = 0
 
@@ -21,14 +21,14 @@ class Enemy {
         this.ySpeed = Math.random() * 10 - 8
 
         this.image = new Image()
-        this.image.src = '../../static/images/enemy1.png'
+        this.image.src = '../../static/images/enemy2.png'
 
         this.flap = 0
         this.flapFrame = 0
     }
 
     draw() {
-        ctx.drawImage(this.image, this.flap * 293, 0, SPRITE_WIDTH, SPRITE_HEIGHT, this.x, this.y, SPRITE_WIDTH, SPRITE_HEIGHT )
+        ctx.drawImage(this.image, this.flap * SPRITE_WIDTH, 0, SPRITE_WIDTH, SPRITE_HEIGHT, this.x, this.y, SPRITE_WIDTH, SPRITE_HEIGHT )
     }
 
     update() {
